@@ -1,3 +1,4 @@
+Harvard notes: https://cs50.harvard.edu/ai/2020/notes/0/#lecture-0
 SEARCH
 Inician en un messy state --> solid state
 Ej: 
@@ -27,4 +28,86 @@ state space: set of all states reachable from the initial state by any sequence 
 
 ¿Cuando sabe la IA que resolvió el problema? ¿Y nosotros?
 --> Goal test: way to determine whether a given state is a goal state 
+
+a veces hay más de un goal state o goal 
+path cost: numerical cost associated with a given path 
+--> queremos minimizarlo
+
+Search Problem:
+- initial state
+- actions
+- Transition model
+- goal test
+- path cost
+
+Solution: sequence of actions that leads from the initial state to a goal state
+Optimal solution: a solution with the lowest path cost entre todas las soluciones
+
+Representación:
+
+_ Node: una estructura that keeps track of (en el caso de un search problem) -->
+    a state
+    a parent
+    an action (action aplicada al parent para llegar a este nodo)
+    a path cost (desde el estado inicial)
+
+¿Como lo resolvemos a un search problem?
+- Explorar opciones (todas)
+Frontier contiene algo que podemos explorar que todavia no lo hicimos
+
+Approach para solucionar:
+- Start with a frontier that contains the initial state
+- Repeat:
+    - if the frontier is empty --> no hay solución.
+    - remove a node from the frontier
+    - si estamos en un nodo con goal state, return solution
+    - si no, expand node (conseguir los nodos a los q puedo ir con un solo arco) y agregarlos al frontier
+
+approach(frontier,node){
+    if(!frontier.empty()){
+        frontier.remove()
+        if(isSolution(node)){
+            return node.solution
+        }else{
+            frontier.add(node.sons)
+            approach(frontier,frontier.tope)
+        }
+    }else{
+        return error
+    }
+}
+
+problemas? arcos ida-vuelta entre nodos, solucion --> llevar rastro de los nodos ya visitados
+    - Revised Approach:
+    le agrego un explored set 
+
+approach(frontier,visitados,node){
+    if(!frontier.empty()){
+        frontier.remove()
+        if(isSolution(node)){
+            return node.solution
+        }else{
+            visitados.add(node)
+            nodos = getNodosNoEnFrontier(node.sons, frontier)
+            nodos = getNodosNoVisitados(nodos visitados)
+            frontier.add(nodos)
+            approach(frontier,frontier.tope)
+        }
+    }else{
+        return error
+    }
+}
+
+getNodosNoEnFrontier(nodos,frontier){
+    return nodos-frontier
+}
+getNodosNoVisitados(nodos,visitados){
+    return nodos-visitados
+}
+
+Cual NODO hay que sacar del frontier?
+--> frontier: stack / pila, last in - first out. Depth-first search.
+--> frontier: queue / cola, fifo. Breadth-first search, siempre va al shallowest node in the frontier.
+
+... 29:20
 
