@@ -1,0 +1,30 @@
+SEARCH
+Inician en un messy state --> solid state
+Ej: 
+    laberintos
+    correct sequence of actions
+    driving directions
+
+agent: entity that perceives its enviroment and acts upon that enviroment
+state: a config oh the agent in its enviroment
+actions: choices that can be made in a state, functions:
+    Actions(S) =>{
+        return the set of actions that can be executed on S
+    }
+
+necesitamos encoding de:
+-actions
+-state
+-relaciones entre ellas --> Transition model*
+* a description of what state results from performing any applicable
+action in any state:
+    Results(s,a) =>{
+        return the state resulting from performing action a in state s
+    }
+
+state space: set of all states reachable from the initial state by any sequence of actions
+    representación general --> un grafo 
+
+¿Cuando sabe la IA que resolvió el problema? ¿Y nosotros?
+--> Goal test: way to determine whether a given state is a goal state 
+
